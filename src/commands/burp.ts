@@ -4,6 +4,7 @@ import {
     demuxProbe,
     joinVoiceChannel,
 } from "@discordjs/voice";
+import { inlineCode } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
 import path from "path";
 import { CommandBase } from "../class/CommandBase";
@@ -25,6 +26,19 @@ async function getRandomBurpPath(): Promise<string> {
 
     const name = files[Math.floor(Math.random() * files.length)];
     return path.resolve(__dirname, relativePath, name);
+}
+
+function getRandomPhrase(): string {
+    const phrases = [
+        "Сейчас нарыгаю",
+        "Совершаю непроизвольное отхождение смеси газов в ротовую полость",
+        "Читаю Ответы mail.ru",
+        "Подступает рыгуля",
+        "Метаю харчи",
+        "Извергаю желудчные газы",
+    ];
+
+    return phrases[Math.floor(Math.random() * phrases.length)];
 }
 
 class BurpCommand extends CommandBase {
@@ -63,7 +77,7 @@ class BurpCommand extends CommandBase {
         connection.subscribe(player);
         player.play(resource);
 
-        return interaction.reply("Сейчас нарыгаю");
+        return interaction.reply(`${getRandomPhrase()} в ${inlineCode(channel.name)}`);
     }
 }
 
